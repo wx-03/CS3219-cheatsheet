@@ -49,6 +49,8 @@
 \fontsize{7}{8}\selectfont
 \fontfamily{qcs}\selectfont
 \begin{multicols*}{5}
+    \uline{\textbf{Lecture 1 - Software Dev Processes}}
+    \uline{\textbf{Lecture 2 - Modern Software Engineering}}
     \uline{\textbf{Lecture 3 - Requirements}}
 
     Requirements are a set of capabilities and constraints
@@ -147,5 +149,123 @@
     %     % If the image is too wide, use a smaller fraction, e.g. 0.8\linewidth.
     %     \includegraphics[width=\linewidth]{sample_image.png}
     % \end{Figure}
+
+    
+    \textbf{Sample problematic requirements}
+
+    User service:
+
+    \begin{itemize}
+        \item F2 The platform should make sure that trusted users can perform important actions.
+        \begin{itemize}
+            \item F2.1 Before a user edits a pickup place, withdraws an errand or marks delivery confirmed, the backend should verify that the user is allowed and return an error code otherwise.
+            \item F2.2 For every private screen / API call, the edge proxy shalll decode the JWT and answer with an error code when teh credential is absent, expired or wrong.
+        \end{itemize}
+    \end{itemize}
+    \uline{Problems}
+    \begin{itemize}
+        \item F2.1 has points related to supplier svc (editing pickup place) and order svc (withdrawing an errod or marking confirmed)
+        \item Implementation details were included in the requirement (JWT)
+        \item Explain trusted users
+        \item Explain important actions
+    \end{itemize}
+
+    % \vspace{7px}
+
+    % \begin{itemize}
+    %     \item N2 Privacy and Account safety
+    %     \begin{itemize}
+    %         \item N2.1 The application shall follow all applicable data rules.
+    %         \begin{itemize}
+    %             \item N2.1.1 Confidential account information in 
+    %         \end{itemize}
+    %     \end{itemize}
+    % \end{itemize}
+    % \uline{Problems}
+    % \begin{itemize}
+    %     \item Avoid UI details
+    % \end{itemize}
+
+    \vspace{7px}
+
+    Supplier service:
+    \begin{itemize}
+        \item 3. Campus pickup point administration
+        \begin{itemize}
+            \item 3.1 The system should display every usable vendor and handover point when a requester starts an errand
+            \begin{itemize}
+                \item 3.1.1 Each result should showw its label and type so users can choose it
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Problems:}
+
+    \begin{itemize}
+        \item Missing creating, deleting, editing
+        \item Define "usable" 
+    \end{itemize}
+
+    \vspace{7px}
+
+    Supplier service:
+    \begin{itemize}
+        \item NFR3 Secure supplier administration
+        \begin{itemize}
+            \item The system shall use proper permissions for the supplier directory
+            \item No confidential details should appear when a supplier request fails
+            \item Extra protction must be added to staff-only supplier URLs
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Problems:}
+    \begin{itemize}
+        \item "Proper permissions" is not testable
+        \item Missing indexing
+    \end{itemize}
+
+    \begin{Figure}
+        \centering
+
+        % If the image is too wide, use a smaller fraction, e.g. 0.8\linewidth.
+        \includegraphics[width=\linewidth]{credit_service_issue.png}
+    \end{Figure}
+    \uline{Problems:}
+    \begin{itemize}
+        \item 5.4: Missing necessary condition for credit transfer (requester has to complete)
+        \item 5.1.1: User service should ensure that a student does not sign up twice
+    \end{itemize}
+
+    \uline{\textbf{Lecture 4 - Software Architecture}}
+
+    The \textbf{Software Architecture} of a program or computing system is the \textbf{structure or structures of the system},
+    which comprise software components, the externally visible properties of those components, and the relationships between them.
+    
+    In short, the overall organization of the system and a high level design
+
+    \textbf{Building blocks of architecture}
+    \begin{itemize}
+        \item Component: Element that models an application-specific function/responsibility/requirement/task/process
+        \item Connector:
+        \item Configuration
+    \end{itemize}
+
+    \begin{Figure}
+        \centering
+        \includegraphics[width=\linewidth]{control_data_flow.png}
+        
+    \end{Figure}
+
+    \textbf{Control flow}
+    \begin{itemize}
+        \item Reasoning is on the computatioon order (computation in C2 depends on computation in C1)
+    \end{itemize}
+
+    \textbf{Data flow}
+    \begin{itemize}
+        \item Reasoning is on the data availability (C2 requires data from C1)
+    \end{itemize}
+
+    Can use solid / dashed lines to differentiate between the 2 flows and add a legend
 \end{multicols*}
 \end{document}
