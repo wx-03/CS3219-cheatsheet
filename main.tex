@@ -239,21 +239,22 @@
     \uline{\textbf{Lecture 4 - Software Architecture}}
 
     The \textbf{Software Architecture} of a program or computing system is the \textbf{structure or structures of the system},
-    which comprise software components, the externally visible properties of those components, and the relationships between them.
+    which comprise software components, the \textbf{externally visible properties} of those components, and the relationships between them.
+
+    (Externally visible properties = FR + NFR)
     
     In short, the overall organization of the system and a high level design
 
     \textbf{Building blocks of architecture}
     \begin{itemize}
-        \item Component: Element that models an application-specific function/responsibility/requirement/task/process
-        \item Connector:
-        \item Configuration
+        \item Component: Element that models an application-specific function, responsibility, requirement, task, or process
+        \item Connector: Element that models interactions among components for the purpose of transfer of control and/or data
+        \item Configuration: Topology or structure
     \end{itemize}
 
     \begin{Figure}
         \centering
         \includegraphics[width=\linewidth]{control_data_flow.png}
-        
     \end{Figure}
 
     \textbf{Control flow}
@@ -267,5 +268,146 @@
     \end{itemize}
 
     Can use solid / dashed lines to differentiate between the 2 flows and add a legend
+
+    \textbf{Message and Event}
+    \begin{itemize}
+        \item Components communiacte via event notifications / message passing / RPC and other protocols
+        \item Async and sync
+        \item Point-to-point
+    \end{itemize}
+    A message is some data sent to a specific address.
+    \begin{itemize}
+        \item In message-driven systems, each component has a unique address to which other components can send messages
+        \item Each component, or recipient, awaits messages and reacts to them
+    \end{itemize}
+    An event is some data emitted from a component for anyone listening to consume
+    \begin{itemize}
+        \item An event is emitted by a component when its state changes - record of something that has happened 
+        \item They are immutable (cannot be changed or deleted)
+        \item They are ordered in the sequence of their creation
+        \item Sent to the publishing infrastructure, where consumers may later retrieve it
+    \end{itemize}
+
+    \textbf{Principle of Modularity}
+
+    \begin{itemize}
+        \item Modularization $\rightarrow$ shorter development time, better flexibility, better comprehensibility
+        \item Decomposing a big chunk into smaller chunks with well-defined interfaces (APIs)
+        \item A way to manage the complexity of a problem by breaking them down to smaller manageable modules 
+    \end{itemize}
+    
+    \textbf{Horizontal vs vertical slicing}
+
+    \begin{Figure}
+        \centering
+        \includegraphics[width=\linewidth]{horizontal_slicing.png}        
+    \end{Figure}
+
+    \begin{Figure}
+        \centering
+        \includegraphics[width=\linewidth]{vertical_slicing.png}        
+    \end{Figure}
+
+    \textbf{Types of cohesion}
+
+    \begin{itemize}
+        \item Functional
+        \begin{itemize}
+            \item Facilities perform only one computation with no side effects
+        \end{itemize}
+        \item Layer
+        \begin{itemize}
+            \item Related services are kept together, everything else is kept out, and there is a strict hierarchy in which higher-level services can access only lower-level services. Accessing a service may result in side effects
+        \end{itemize}
+        \item Communicational
+        \begin{itemize}
+            \item Facilities for operating ont he same data are kept together
+        \end{itemize}
+        \item Sequential
+        \begin{itemize}
+            \item A set of procedures, which work in sequence to perform some computation, are kept together. Output is from one input to the next.
+        \end{itemize}
+        \item Procedural
+        \begin{itemize}
+            \item A set of procedures, which are called one after another, are kept together
+        \end{itemize}
+        \item Temporal
+        \begin{itemize}
+            \item Procedures used in the same general phase of execution, such as initialization or termination, are kept together
+        \end{itemize}
+        \item Utility
+        \begin{itemize}
+            \item Related utilities are kept together, when there is no way to group them using a stronger form of cohesion
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Types of coupling}
+    \begin{itemize}
+        \item Content
+        \begin{itemize}
+            \item Component modifies internal data of another
+        \end{itemize}
+        \item Common / global
+        \begin{itemize}
+            \item Using global variables; all modules using the global variable are coupled
+        \end{itemize}
+        \item Control
+        \begin{itemize}
+            \item One module (A) directly controls the other (B) by passing information on what B should do; e.g., using a ``flag'' that defines what B should do
+        \end{itemize}
+        \item Data
+        \begin{itemize}
+            \item One module sharing data with another module; e.g., via passing parameters
+        \end{itemize}
+        \item External
+        \begin{itemize}
+            \item A dependency exists to elements outside the scope of the system, such as the operating system, shared libraries or the hardware.
+        \end{itemize}
+        \item Temporal
+        \begin{itemize}
+            \item Two actions are bundled together just because they happen to occur at the same time
+        \end{itemize}
+        \item Inclusion / import
+        \begin{itemize}
+            \item Including a tile or importing a package
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Architecture styles}
+    \begin{enumerate}
+        \item How is the code divided?
+        \begin{itemize}
+            \item Technical concern (horizontal)
+            \begin{itemize}
+                \item Focuses on the \textbf{separation of concerns}
+                \item May align with the team's expertise (e.g. frontend, backend, db administrator)
+            \end{itemize}
+            \item Domain (business concern) (vertical)
+            \begin{itemize}
+                \item Aligned with the domain (business concern)
+                \item Logical components map to the problem (e.g. customer, payment, shipping)
+            \end{itemize}
+        \end{itemize}
+        \item How is the system deployed?
+        \begin{itemize}
+            \item Single deployed unit (monolithic)
+            \begin{itemize}
+                \item Deploy all logical components that make up the application as one unit
+                \item Application runs as one process
+            \end{itemize}
+            \item Distributed units
+            \begin{itemize}
+                \item Application consists of independent logical components
+                \item Logical components run as individual processes
+                \item Communicate over the network
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+
+    \begin{Figure}
+        \centering
+        \includegraphics[width=\linewidth]{architectural_styles_summary.png}        
+    \end{Figure}
+
 \end{multicols*}
 \end{document}
