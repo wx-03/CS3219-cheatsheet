@@ -151,24 +151,24 @@
     % \end{Figure}
 
     
-    \textbf{Sample problematic requirements}
+    % \textbf{Sample problematic requirements}
 
-    User service:
+    % User service:
 
-    \begin{itemize}
-        \item F2 The platform should make sure that trusted users can perform important actions.
-        \begin{itemize}
-            \item F2.1 Before a user edits a pickup place, withdraws an errand or marks delivery confirmed, the backend should verify that the user is allowed and return an error code otherwise.
-            \item F2.2 For every private screen / API call, the edge proxy shalll decode the JWT and answer with an error code when teh credential is absent, expired or wrong.
-        \end{itemize}
-    \end{itemize}
-    \uline{Problems}
-    \begin{itemize}
-        \item F2.1 has points related to supplier svc (editing pickup place) and order svc (withdrawing an errod or marking confirmed)
-        \item Implementation details were included in the requirement (JWT)
-        \item Explain trusted users
-        \item Explain important actions
-    \end{itemize}
+    % \begin{itemize}
+    %     \item F2 The platform should make sure that trusted users can perform important actions.
+    %     \begin{itemize}
+    %         \item F2.1 Before a user edits a pickup place, withdraws an errand or marks delivery confirmed, the backend should verify that the user is allowed and return an error code otherwise.
+    %         \item F2.2 For every private screen / API call, the edge proxy shalll decode the JWT and answer with an error code when teh credential is absent, expired or wrong.
+    %     \end{itemize}
+    % \end{itemize}
+    % \uline{Problems}
+    % \begin{itemize}
+    %     \item F2.1 has points related to supplier svc (editing pickup place) and order svc (withdrawing an errod or marking confirmed)
+    %     \item Implementation details were included in the requirement (JWT)
+    %     \item Explain trusted users
+    %     \item Explain important actions
+    % \end{itemize}
 
     % \vspace{7px}
 
@@ -186,55 +186,55 @@
     %     \item Avoid UI details
     % \end{itemize}
 
-    \vspace{7px}
+    % \vspace{7px}
 
-    Supplier service:
-    \begin{itemize}
-        \item 3. Campus pickup point administration
-        \begin{itemize}
-            \item 3.1 The system should display every usable vendor and handover point when a requester starts an errand
-            \begin{itemize}
-                \item 3.1.1 Each result should showw its label and type so users can choose it
-            \end{itemize}
-        \end{itemize}
-    \end{itemize}
+    % Supplier service:
+    % \begin{itemize}
+    %     \item 3. Campus pickup point administration
+    %     \begin{itemize}
+    %         \item 3.1 The system should display every usable vendor and handover point when a requester starts an errand
+    %         \begin{itemize}
+    %             \item 3.1.1 Each result should showw its label and type so users can choose it
+    %         \end{itemize}
+    %     \end{itemize}
+    % \end{itemize}
 
-    \uline{Problems:}
+    % \uline{Problems:}
 
-    \begin{itemize}
-        \item Missing creating, deleting, editing
-        \item Define "usable" 
-    \end{itemize}
+    % \begin{itemize}
+    %     \item Missing creating, deleting, editing
+    %     \item Define "usable" 
+    % \end{itemize}
 
-    \vspace{7px}
+    % \vspace{7px}
 
-    Supplier service:
-    \begin{itemize}
-        \item NFR3 Secure supplier administration
-        \begin{itemize}
-            \item The system shall use proper permissions for the supplier directory
-            \item No confidential details should appear when a supplier request fails
-            \item Extra protction must be added to staff-only supplier URLs
-        \end{itemize}
-    \end{itemize}
+    % Supplier service:
+    % \begin{itemize}
+    %     \item NFR3 Secure supplier administration
+    %     \begin{itemize}
+    %         \item The system shall use proper permissions for the supplier directory
+    %         \item No confidential details should appear when a supplier request fails
+    %         \item Extra protction must be added to staff-only supplier URLs
+    %     \end{itemize}
+    % \end{itemize}
 
-    \uline{Problems:}
-    \begin{itemize}
-        \item "Proper permissions" is not testable
-        \item Missing indexing
-    \end{itemize}
+    % \uline{Problems:}
+    % \begin{itemize}
+    %     \item "Proper permissions" is not testable
+    %     \item Missing indexing
+    % \end{itemize}
 
-    \begin{Figure}
-        \centering
+    % \begin{Figure}
+    %     \centering
 
-        % If the image is too wide, use a smaller fraction, e.g. 0.8\linewidth.
-        \includegraphics[width=\linewidth]{credit_service_issue.png}
-    \end{Figure}
-    \uline{Problems:}
-    \begin{itemize}
-        \item 5.4: Missing necessary condition for credit transfer (requester has to complete)
-        \item 5.1.1: User service should ensure that a student does not sign up twice
-    \end{itemize}
+    %     % If the image is too wide, use a smaller fraction, e.g. 0.8\linewidth.
+    %     \includegraphics[width=\linewidth]{credit_service_issue.png}
+    % \end{Figure}
+    % \uline{Problems:}
+    % \begin{itemize}
+    %     \item 5.4: Missing necessary condition for credit transfer (requester has to complete)
+    %     \item 5.1.1: User service should ensure that a student does not sign up twice
+    % \end{itemize}
 
     \uline{\textbf{Lecture 4 - Software Architecture}}
 
