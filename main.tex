@@ -404,11 +404,81 @@
 
     \textbf{Strategies for Continuous Deployment}
 
+    \uline{In-place deployment}         
+
     \begin{itemize}
-        \item In-place deployment
-        \item Rolling deployment
-        \item Blue/Green deployment
-        \item Canary deployment
+        \item Each module/compute is stopped, latest version installed, started, \& validated
+        \item Minimal disturbance to the infrastructure
+        \item Reduced infrastructure cost
+        \item Affects availability (bc of downtime when u shut down the old version \& bring up the new one)
+        \item E.g., AWS Beanstalk allows one-at-a-time, half-at-a-time, all-at-once mechanisms for deployment
+    \end{itemize}
+
+    \uline{Rolling deployment}
+
+    \begin{itemize}
+        \item Replace previous versions of the application by completely replacing the
+        infrastructure on which the application is running
+        \item E.g., containers running previous versions of the application will be replaced one-by-one
+        with containers running new versions of the application
+        \item No isolation between old/new versions
+        \item Complicates rollback
+        \item Some using old version, some using new version
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=0.8\linewidth]{rolling_deployment.png}
+    \end{Figure}
+
+    \uline{Blue/Green deployment}
+    \begin{itemize}
+        \item Shift traffic between 2 identical environments
+        \item Run different versions of the application in each
+        \item Near-zero downtime
+        \item Allows rollback
+        \item Simplified CI/CD workflow by limiting the complexity
+    \end{itemize}
+    Example: Amazon e-commerce
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{blue_green.png}
+    \end{Figure}
+
+    \uline{Canary deployment}
+
+    \begin{itemize}
+        \item Reduce the risk of deployment
+        \item Incrementally deploy new versions, starting with a small subset of users
+        \item AKA incremental rollout
+        \item Can be used for A/B testing
+    \end{itemize}
+    E.g. Google Chrome Canary
+
+    \textbf{DevOps}
+
+    DevOps is a set of software development practices that combine software development and operations.
+    The set of practices intends to reduce the time between committing a change to a system, and the change
+    being placed into normal production while ensuring high quality.
+
+    \textbf{DevOps pipeline} is a set of automated processes and tools that allows developers
+    and operations professionals to collaborate on building and deploying code to a production environment.
+
+    \textbf{Benefits of DevOps}
+
+    \begin{itemize}
+        \item \textbf{Speed of delivery}: The model enables the dev and ops teams to deliver faster
+        for customers. Practices of CI/CD that automate the software release process, from build to deploy
+        can quicker release new features and fix bugs.
+        \item \textbf{Reliability}: CI/CD ensure testing that each change is functional and safe.
+        Monitoring and logging help stay informed of performance in real-time. These contribute
+        to more reliable delivery and positive experience of end-users.
+        \item \textbf{Scale}: Operating and managing infrastructure and development processes with 
+        automation and consistency help improve scalability. Infrastructure as code helps manage dev, testing,
+        and prod envs in a repeatable and more efficient manner.
+        \item \textbf{Improved collaboration}: Dev and ops teams collaborate closely, share responsibilities, and workflows.
+        This reduces inefficiencies and saves time (e.g. reduced handover periods between dev and ops)
     \end{itemize}
 
     \uline{\textbf{Lecture 2 - Modern Software Engineering}}
@@ -419,11 +489,13 @@
     [IEEE]
     \begin{enumerate}
         \item A condition or capability needed by a user to solve a problem or achieve an objective
-        \item A condition or capability that must be met or possessed by a system or system component to satisfy a contract, standard, specification, or other formally imposed documents
+        \item A condition or capability that must be met or possessed by a system or system component
+        to satisfy a contract, standard, specification, or other formally imposed documents
         \item A documented representation fo a condition or capability as in (1) or (2)
     \end{enumerate}
     \textbf{Example of capability:} system should allow a requester to specify pick-up and drop-off locations.
-    \textbf{Example of constraint:} pick-up and drop-off locations should be from a list of on-campus buildings / landmarks.
+    \textbf{Example of constraint:} pick-up and drop-off locations should be from a list of on-campus
+    buildings / landmarks.
 
     \textbf{Requirements Development Phases}
     \begin{Figure}
