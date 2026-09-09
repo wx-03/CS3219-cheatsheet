@@ -482,6 +482,154 @@
     \end{itemize}
 
     \uline{\textbf{Lecture 2 - Modern Software Engineering}}
+
+    \textbf{Automation}
+    \begin{itemize}
+        \item Repeated tasks
+        \item Know what needs to be document
+        \item AI: automate, do it efficiently and reliably, every time
+        \item E.g. workflow automation (CI/CD, infrastructure deployment, ...)
+    \end{itemize}
+
+    \textbf{Pattern detection}
+    \begin{itemize}
+        \item Tasks adhere to some rules
+        \item Exploit the structure
+        \item AI: sift through gigantic codebase to detect vulnerabilities
+        \item E.g. identifying query patterns
+    \end{itemize}
+
+    \uline{Example: vulnerability detection}
+
+    Observation: vulnerabilities are caused by a single repeating pattern $\rightarrow$ solution is
+    to exploit ML (+ expert knowledge) to identify such patterns
+
+    Mechanism components:
+    \begin{itemize}
+        \item Encoded expert knowledge
+        \item Large volumes of weak evidence
+        \item Pattern detection
+        \item Deductive and inductive reasoning
+        \item Create higher-level features
+    \end{itemize}
+
+    \textbf{Collaboration}
+    \begin{itemize}
+        \item Code sequence predicition and generation
+        \item Brainstorming code solutions
+        \item Rapid prototyping
+        \item E.g. Copilot, ChatGPT, ...
+        \item Turn-by-turn development
+        \item AI: suggestion, discussion, refinement with humans
+        \item Review each step as it happens
+        \item E.g. copilot chat
+    \end{itemize}
+
+    \textbf{Delegation}
+    \begin{itemize}
+        \item Engineer: state desired outcome
+        \item AI: Plan $\rightarrow$ execute (update filse, test, fix bugs, iterate)
+        $\rightarrow$ present for review
+        \item Review final output, not steps
+        \item E.g. claude code, cursor, ...
+    \end{itemize}
+
+    \textbf{Orchestration}
+    \begin{itemize}
+        \item Several (specialized) agents, several roles
+        \item AI: task decomposition, planning and execution
+        \item Human or AI: Coordination
+        \item E.g. CrewAI, LangGraph, ...
+    \end{itemize}
+
+    \textbf{Boosting productivity}
+    \begin{itemize}
+        \item Code efficiently thorugh autocomplete and boilerplate code generation, 
+        allows for devs to try various approaches quickly
+        \item Tackle new problems creatively by generating and explaining code, configs and docs
+        \item Code translation (e.g. legacy code to python)
+        \item Writing maintainable code (detect code vulnerabilities and fix, improve code quality, enforce good practices)
+        \item Better testing by generating tests and improving test coverage
+        \item Agentic coding to automatically fix bugs (95+\% of GitHub issues resolved automatically)
+    \end{itemize}
+
+    \textbf{Potential risks}
+
+    \begin{enumerate}
+        \item Garbage In Garbage Out (output is only as good as input)
+        \begin{itemize}
+            \item Regurgitation of bad code
+            \item More applicable to more niche use-cases
+            \item Correctness is not guaranteed $\Rightarrow$ reduced trust (e.g. policy for db tuning needs validation)
+        \end{itemize}
+        \item Traceability of the source
+        \begin{itemize}
+            \item Not all code can be used as is (restrictions: license terms, correctness, etc.)
+            \item Recourse: some tools claim to flag training data (e.g. Amazon CodeWhisperer)
+        \end{itemize}
+        \item Data safety
+        \begin{itemize}
+            \item Confidential data may be leaked (e.g. Samsung bans ChatGPT)
+        \end{itemize}
+        \item Susceptible to vulnerabilities
+        \begin{itemize}
+            \item Bad actors can plant malicious code in public domain that is used for training
+        \end{itemize}
+        \item Increasing technical debt
+        \begin{itemize}
+            \item Maintaining others' code is hard, maintaining automatically generated code is harder
+        \end{itemize}
+    \end{enumerate}
+
+    \textbf{Vibe coding and technical debt}
+
+    \uline{Benefits:}
+
+    \begin{itemize}
+        \item Compressed distance between:
+        \begin{itemize}
+            \item idea $\rightarrow$ prototype
+            \item requirement $\rightarrow$ interface
+            \item prompt $\rightarrow$ implementation
+            \item feedback $\rightarrow$ revised feature
+        \end{itemize}
+        \item Resulting in rapid prototyping and MVP development
+        \item Lower barriers for non-specialists and domain experts
+        \item Faster exploration of alternative designs
+    \end{itemize}
+
+    \uline{Problems:}
+
+    \begin{itemize}
+        \item Inconsistent architecture
+        \item Security / performance / maintainability $\downarrow$
+        \item Increased review / verification / rework burden
+    \end{itemize}
+
+    Role of SWE if AI can do everyt:
+    \begin{itemize}
+        \item System engineer
+        \begin{itemize}
+            \item Understand user needs, decipher requirements
+            \item Identify architecture decomposition and design
+            \item Evaluate trade-offs, plan long-term evolution
+        \end{itemize}
+        \item Orchestrator
+        \begin{itemize}
+            \item Decompose problems, identify and provide contexts
+            \item Guide AI tools and agents, coordinate coding-testing-review-documentation
+        \end{itemize}
+        \item Quality guardian
+        \begin{itemize}
+            \item Review and validate code correctness and security
+            \item Manage technical debt and maintainability
+            \item Monitor system performance
+        \end{itemize}
+        \item Skills that become more valuable: problem framing, system thinking, communication,
+        testing, responsible judgement, continuous learning
+    \end{itemize}
+
+
     \uline{\textbf{Lecture 3 - Requirements}}
 
     Requirements are a set of capabilities and constraints
@@ -493,7 +641,9 @@
         to satisfy a contract, standard, specification, or other formally imposed documents
         \item A documented representation fo a condition or capability as in (1) or (2)
     \end{enumerate}
+
     \textbf{Example of capability:} system should allow a requester to specify pick-up and drop-off locations.
+
     \textbf{Example of constraint:} pick-up and drop-off locations should be from a list of on-campus
     buildings / landmarks.
 
