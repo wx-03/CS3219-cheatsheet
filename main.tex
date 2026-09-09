@@ -47,7 +47,7 @@
 
 \begin{document}
 \fontsize{7}{8}\selectfont
-\fontfamily{qcs}\selectfont
+\fontfamily{qhv}\selectfont
 \begin{multicols*}{5}
     \uline{\textbf{Lecture 1 - Software Dev Processes}}
 
@@ -113,6 +113,302 @@
             \item Software / services delivered over the internet
             \item Different models - IaaS (infrastructure), PaaS (platform), SaaS (software)
         \end{itemize}
+        \item Comprises resources, infrastructure, and tools hosted by vendors
+        \item Cloud-enabled: legacy enterprise applications designed for local datacentres, but modified to run on the cloud
+        \begin{itemize}
+            \item Retain most features as the legacy system
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Cloud-native applications}
+    \begin{itemize}
+        \item Cloud native is the software approach of building, deploying, and managing modern applications
+              in cloud computing environments.
+        \item Characteristic features of cloud-native applications:
+        \begin{itemize}
+            \item Immutable infrastructure
+            \item Microservices-based applications
+            \item API driven
+            \item Service mesh
+            \item Containers
+            \item Dynamically managed
+        \end{itemize}
+        \item Cloud-native development: CI/CD, DevOps, Serverless computing
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{monolithic_web-app_example.png}
+    \end{Figure}
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{cloud-native_app_example.png}
+    \end{Figure}
+
+    \textbf{Cloud-native applciation stack}
+
+    \begin{itemize}
+        \item Infrastructure layer
+        \item Provisioning layer
+        \item Runtime layer
+        \item Ochestration and management layer
+        \item Application definition and development layer
+        \item Observability and analysis tools
+    \end{itemize}
+
+    \textbf{Software delivery and deployment}
+    
+    Activities that make the software available for use after the development
+
+    \textbf{Deployment:} process between acquisition of software and execution of software
+
+    Deployment decisions can affect the quality attributes
+
+    \textbf{Deployment considerations}
+
+    \begin{itemize}
+        \item Integration of the internet and related advances
+        \begin{itemize}
+            \item Virtual worldwide marketplace
+            \item Considerations: shift towards cloud-nativity
+            \item \textit{Quality attribute: Portability}
+        \end{itemize}
+        \item Large-scale content delivery
+        \begin{itemize}
+            \item Transfer data/information between various end-points
+            \item Considerations: location, number of end-points, quality of service
+            \item \textit{Quality attribute: Availability, performance}
+        \end{itemize}
+        \item Heterogenous platforms
+        \begin{itemize}
+            \item Variety of OS/Browser/Platform combinations
+            \item Considerations: Coexistence of platforms and interoperability between platforms
+            \item \textit{Quality attribute: Interoperability}
+        \end{itemize}
+        \item Dependency and change management
+        \begin{itemize}
+            \item Multiple components have interdependencies 
+            \begin{itemize}
+                \item ``uses'' relationship
+            \end{itemize}
+            \item Considerations: configurations, version changes (within and outside components), compatibility
+            \item \textit{Quality attribute: Maintainability}
+        \end{itemize}
+        \item Coordination \& communication among components
+        \begin{itemize}
+            \item Computations among components need coordination
+            \item Considerations: API design, nature (synchronous/async) of communication
+            \item \textit{Quality attribute: Performance}
+        \end{itemize}
+        \item Security
+        \begin{itemize}
+            \item Requirements of privacy, authentication, authorization, and integrity
+            \item Considerations: mechanisms for encryption, authentication \& authorization management, attribution
+            \item \textit{Quality attribute: Security, usability}
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Deployment mechanisms}
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{deployment_mechanisms.png}
+    \end{Figure}
+
+    \uline{Bare metal}
+    
+    \begin{itemize}
+        \item From code to executable
+        \begin{itemize}
+            \item Catering to target platforms
+            \item Customized build \& linking
+            \item Factors affecting: availability of libraries \& dependencies 
+        \end{itemize}
+        \item Potentially wasted hardware resources
+        \item Cost factor
+        \item Scalability issues
+        \item Developer productivity reduced
+        \item Benefits:
+        \begin{itemize}
+            \item Complete control
+            \item Physical isolation
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Virtual machines}
+    
+    \begin{itemize}
+        \item VMs improve resource utilization $\rightarrow$ reduced cost
+        \item Flexible, scalable
+        \item Problems:
+        \begin{itemize}
+            \item Still a full OS running inside VMs
+            \item Susceptible to side-channel attacks
+            \item ``Noisy neighbor'' problem (if 1 VM uses too much memory, it will affect other VMs)
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Containers}
+    
+    \begin{itemize}
+        \item Benefits:
+        \begin{itemize}
+            \item Lighter than VMs
+            \begin{itemize}
+                \item Include only OS processes and dependencies necessary
+                \item Better utilization of hardware capacity
+                \item Allows rapid deployment
+            \end{itemize}
+            \item Write once run anywhere
+            \begin{itemize}
+                \item Provision containers to run the applications
+                \item Ideal for CI/CD, Agile/DevOps practices
+            \end{itemize}
+            \item Granular \& controllable
+            \begin{itemize}
+                \item Deployments can be of the whole system or of elements within a system
+                \item Monitor deployment, rollback / patch / redeploy easily
+            \end{itemize}
+            \item Easy integration of the internet and related advances
+            \begin{itemize}
+                \item Build cloud-native applications
+            \end{itemize}
+            \item Include runtime with code
+            \begin{itemize}
+                \item Caters to heterogeneous platforms
+                \item Can achieve interoperability \& portability
+            \end{itemize}
+            \item Supports dependency and change management
+            \begin{itemize}
+                \item Improved maintainability of the software
+            \end{itemize}
+            \item Environment management
+            \begin{itemize}
+                \item Applies to both development \& deployment
+                \item E.g., Dockerfile provides the environment description
+            \end{itemize}
+            \item Reproducible
+            \begin{itemize}
+                \item Guaranteed to be identical on any system that can run containers
+            \end{itemize}
+            \item Isolation \& security
+            \begin{itemize}
+                \item Avoid conflicting dependencies
+                \item Can provide some sand-boxing for code execution
+            \end{itemize}
+            \item Quick to launch (order of milliseconds)
+            \item Supports DevOps best practices
+            \item Can be used with orchestrator like Kubernetes
+            \begin{itemize}
+                \item Orchestration automates provisioning, deployment, networking, scaling, availability, and lifecycle management of containers
+                \item Decides how and where containers run
+            \end{itemize}
+    \end{itemize}
+
+    \item Problems:
+        \begin{itemize}
+            \item Not suitable for all applications
+            \item Not suitable for performance-critical applications
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Container vs Orchestrator}
+
+    \textbf{Containers} provide the platform for building and distributing services
+    \begin{itemize}
+        \item Not suited for running complex applications on its own
+        \item Often need multiple containers, each (set) doing specific tasks / providing specific services
+    \end{itemize}
+
+    An \textbf{orchestrator} is a separate software that:
+    \begin{itemize}
+        \item Integrates and coordinates many parts (modules, hosted on containers),
+        \item scales up / down the deployment based on demand,
+        \item provides fault tolerance to the application, and
+        \item provides communication among the containers.
+    \end{itemize}
+
+    Orchestrator works with the containers to realize the production. (e.g. container: docker, orchestrator: kubernetes)
+
+    \uline{Serverless}
+    \begin{itemize}
+        \item A cloud-native development model
+        \item There are still serveres, but developers / enterprises don't have to manage the servers
+        \item Developers package the code in containers
+        \begin{itemize}
+            \item Application deployed via these containers
+            \item Once deployed, apps respond to demand - automatically scale up / down as needed
+            \item Economics: Metered on demand $\Rightarrow$ no cost when idle
+        \end{itemize}
+        \item Example: AWS Lambda
+        \item Cloud provider manages the physical servers
+        \item Dynamically allocate resources on behalf of developers (or users)
+        \item Code deployed to production
+        \item Works based on Function-As-A-Services (FAAS)
+        \begin{itemize}
+            \item Event-driven execution model (run when needed)
+            \item App logic deployed in containers
+            \item Such containers are managed by the platform / service provider
+            \item Stateless applications
+            \item Ephemeral - short execution times
+        \end{itemize}
+        \item Example applications:
+        \begin{itemize}
+            \item Batch processing of image and video
+            \item Scheduled data compression
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Software Delivery}
+
+    \textbf{Deployment pipeline} is an automated implementation of application build, deploy, test, and release process
+    
+    \textbf{CI/CD pipeline} is an automated workflow that enables teams to build, test, and deploy
+    code efficiently and reliably
+
+    \uline{Continuous integration}
+
+    Build $\Rightarrow$ Unit Tests $\Rightarrow$ Deploy to stage $\Rightarrow$ Acceptance tests
+
+    \uline{Continuous delivery}
+
+    Build $\Rightarrow$ Unit Tests $\Rightarrow$ Deploy to stage $\Rightarrow$ Acceptance tests $\Rightarrow$ (manually) Deploy to production
+
+    \uline{Continuous deployment}
+
+    Build $\Rightarrow$ Unit Tests $\Rightarrow$ Deploy to stage $\Rightarrow$ Acceptance tests $\Rightarrow$ (automatically) Deploy to production
+
+    \textbf{CI/CD Definitions}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{CI_CD_definitions.png}
+    \end{Figure}
+
+    \textbf{Continuous delivery and deployment}
+
+    The ability to get changes of all types (new features, config changes, bug fixes, experiments) into production,
+    or into the hands of users, safely and quickly in a sustainable way.
+
+    Benefits:
+    \begin{itemize}
+        \item Low-risk releases (human error in the process of deploying is reduced, small portions
+        delivered continuously and can get feedback from consumers)
+        \item Faster time to market and early feedback
+        \item Higher quality (continuous feedback $\rightarrow$ detect bugs earlier and fix earlier)
+        \item Lower cost (saving man-hours due to automation, bugs late in the cycle are expensive)
+    \end{itemize}
+
+    \textbf{Continuous delivery}: Software \uline{can be} released into prod at any given time
+
+    \textbf{Continuous deployment}: Software is \uline{released automatically} into prod
+
+    \textbf{Strategies for Continuous Deployment}
+
+    \begin{itemize}
+        \item In-place deployment
+        \item Rolling deployment
+        \item Blue/Green deployment
+        \item Canary deployment
     \end{itemize}
 
     \uline{\textbf{Lecture 2 - Modern Software Engineering}}
@@ -197,7 +493,7 @@
         \item Observed when the software is executing
         \item Impacts user's experienece of using the software
         \item Develops the user's perception of software quality
-        \item E.g. Availability, performace, robustness, safety, security, reliability, deployability, compatibility, installability, usability, interoperability, integrity
+        \item E.g. Availability, performance, robustness, safety, security, reliability, deployability, compatibility, installability, usability, interoperability, integrity
     \end{itemize}
 
     \textbf{Internal:}
