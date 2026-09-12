@@ -992,5 +992,155 @@
         \includegraphics[width=\linewidth]{architectural_styles_summary.png}        
     \end{Figure}
 
+    \textbf{\uline{Cloud-native sharing}}
+
+    A cloud is an abstraction. A cloud is a data centre (a bunch of servers). 
+
+    Cloud native vs cloud computing:
+
+    \textbf{Cloud computing:} through eos, obtain infra at low cost and provide throughout the world
+
+    \begin{itemize}
+        \item Resource pooling
+        \item Broad network access
+        \item On-demand self-service
+        \item Rapid elasticity
+        \item Pay as you go
+        \item Measured service
+        \item Scale as you need. if need more js pay more then provider can provide more. if need less js scale back and pay accordingly
+        \item Operational expenditure model (similar to phone bills)
+    \end{itemize}
+
+    \textbf{Cloud native:} 
+    \begin{itemize}
+        \item Architecture
+        \item Applications
+        \item Services
+    \end{itemize}
+
+    Cloud native dev is an approach to building and running applications that exploits the advantages of cloud computing
+
+    Scalable, loosely coupled, resilient, manageable, observable
+
+    Containers, service meshes, microservices, immutable infra, declarative APIs enable the technology to be cloud-native
+
+    \textbf{Problem facing now:}
+
+    \begin{itemize}
+        \item Cannot write sw fast enough
+        \begin{itemize}
+            \item How can we respond to mkt changes and business needs?
+            \item How can we ensure our service is always available for users?
+            \item How can we provide high quality of service to our users?
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Design considerations for distributed apps}
+
+    \begin{itemize}
+        \item An app should not be tied to a specific host or network
+        \item The end user should not be affected by a hw or sw failure
+        \item An app should still be accessible as its workload increases
+        \item There should not be any downtime when rolling out new updates to the app
+    \end{itemize}
+
+    \textbf{What is a microservice?}
+
+    Use a divide-and-conquer method
+
+    \textbf{Limitations of monolith}
+    \begin{itemize}
+        \item One unit of deployment
+        \item All functionalities and processes are tightly coupled
+        \item Running as single service
+        \item Adding new featuers becomes more complex over time
+        \item Lock-in to a particular tech stack
+        \item Low fault tolerance
+        \item Scaling limitations
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{monolith_diagram.png}
+    \end{Figure}
+
+    \textbf{Microservices}
+
+    \begin{itemize}
+        \item Independently deployable services modeled around a business domain
+        \item Small and lightweight
+        \item Communicate with one another via APIs using standard network protocols (HTTP, AMQP, etc.)
+        \item Technology agnostic (having an unbiased approach to tools and systems, where software or strategies are designed to work across multiple platforms, languages, or vendors without being tied to just one.)
+        \item Benefits:
+        \begin{itemize}
+            \item Faster startup time
+            \item Better testability
+            \item Independent deployability
+            \item Independent scalability
+            \item Improved fault isolation
+            \item Technology agnostic
+        \end{itemize}
+    \end{itemize}
+
+    Each ms should hv its own db
+
+    \textbf{New problem created}: Where to host these microservices?
+
+    Originally in monolithic system, the app was sitting on an OS or VM. Admin just need to focus on this monolithic app.
+
+    Now got many ms running at the same time, so VM for each ms or all ms in one VM?
+
+    If all ms in one VM, if VM goes down then all ms go down. 
+
+    But if 1 VM for each ms, then overkill cuz each ms shd be optimised to be lightweight.
+
+    \textbf{Containers}
+
+    Box with app, language runtime / interpreter / compiler, app libraries and dependencies
+
+    Mitigate dependency btwn app and ext. env
+
+    \begin{itemize}
+        \item Separation of responsibility
+        \item Workload portability
+        \item Application isolation
+        \begin{itemize}
+            \item If anyt fails, can pinpoint where the error is from
+        \end{itemize}
+        \item Greater resource efficiency
+        \item Improved developer productivity
+    \end{itemize}
+
+    So makes sense for each ms to be run in one container. Then multiple containers in one VM.
+
+    \textbf{Container Sprawl}
+
+    Containers are stateless in nature, lifetime is not consistent.
+
+    Therefore use \textbf{container orchestration}
+
+    \begin{itemize}
+        \item Service discovery and load balancing
+        \item Storage orchestration
+        \item Automated rollouts and rollbackcs
+        \item Auto-scaling
+        \item Self-healing
+        \item ...
+    \end{itemize}
+
+    \textbf{Kubernetes} is a container orchestration platform
+
+    Environment for running distributed apps on containers at scale
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{kubernetes_diag.png}
+    \end{Figure}
+
+    Can treat hardware resources as a black box, js nd to focus on building the
+    app and deploying it, the platform will do the rest
+
+    https://landscape.cncf.io/?view-mode=grid
+
 \end{multicols*}
 \end{document}
