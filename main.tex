@@ -830,7 +830,7 @@
 
     \textbf{Building blocks of architecture}
     \begin{itemize}
-        \item Component: Element that models an application-specific function, responsibility, requirement, task, or process
+        \item Component: Element that models an application-specific function, responsibility, requirement, task, or process (functional unit)
         \item Connector: Element that models interactions among components for the purpose of transfer of control and/or data
         \item Configuration: Topology or structure
     \end{itemize}
@@ -850,7 +850,8 @@
         \item Reasoning is on the data availability (C2 requires data from C1)
     \end{itemize}
 
-    Can use solid / dashed lines to differentiate between the 2 flows and add a legend
+    Can use solid / dashed lines to differentiate between the 2 flows and add a legend.
+    OR can write what it means on top of the arrow (if not messy)
 
     \textbf{Message and Event}
     \begin{itemize}
@@ -1141,6 +1142,182 @@
     app and deploying it, the platform will do the rest
 
     https://landscape.cncf.io/?view-mode=grid
+
+    \textbf{\uline{Lecture 6 - Software Architecture}}
+
+    Common architectural styles:
+
+    \begin{itemize}
+        \item Classical architectures
+        \item Modular monolith
+        \item MVC
+        \item SPA
+    \end{itemize}
+
+    \textbf{Architecture styles}
+
+    \begin{itemize}
+        \item Many software architectural styles exist and each follows a specific philosophy
+        \begin{itemize}
+            \item Software is built for specific purpose
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{System Architecture}
+
+    \begin{enumerate}
+        \item Layered Architecture
+        \item Pipe and Filter
+        \item Modular Monoliths
+    \end{enumerate}
+
+    \textbf{Layered Architecture}
+
+    Software is organized as layers of components
+    
+    \begin{itemize}
+        \item Supports independent development and evolution of different system parts
+        \item No lower-level layer will make a call to a upper-level layer
+        \item Comprises one or more layers for the software under development, with each layer having a distinct and specific responsiblity
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=0.4\linewidth]{layered_architecture.png}
+    \end{Figure}
+
+    Buys:
+
+    \begin{itemize}
+        \item Structure-enforced separation of concerns
+        \item Modifiability within the layer
+        \begin{itemize}
+            \item Can swap technologies without affecting other layers
+            \item E.g. swap oracle db with mysql
+        \end{itemize}
+        \item Testability - mockk the layer below to test the current layer
+    \end{itemize}
+
+    Costs:
+    \begin{itemize}
+        \item Deployability - all or nothing (cuz everyt is one process)
+        \item No independent scaling
+        \item No feature ownership - teams organized by layers
+        \item Change amplification - one feature change impacts all layers (because one feature cuts across multiple layers)
+    \end{itemize}
+
+    Doesn't impact usability
+
+    \textbf{Pipe and Filter}
+
+    \begin{itemize}
+        \item Linear
+        \item Data enters the system and flows through the components one at a time until the data is assigned to some final destination (data sink)
+        \item Components: Filters, data source, data sink; each component has
+        \begin{itemize}
+            \item Set of inputs (read)
+            \item Set of outputs (produce)
+        \end{itemize}
+        \item Filter:
+        \begin{itemize}
+            \item Transforms the input streams
+            \item Computes incrementally, so output begins before the input is consumed
+            \item Independent, share no state with other filters
+        \end{itemize}
+        \item Connectors: Pipes
+        \begin{itemize}
+            \item Each pipe transmits outputs of one filter to inputs of another
+        \end{itemize}
+        \item Divide the application's task into several self-contained data process steps and connect these steps to a data processing pipeline via intermediate data buffers
+        \item Data flows in streams: good for processing of images, audio, video, or batch data
+        \item Good for limited user interaction, like batch processing systems
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{pipe_and_filter.png}
+    \end{Figure}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{pipe_and_filter_2.png}
+    \end{Figure}
+
+    Buys:
+
+    \begin{itemize}
+        \item Scalability - due to stateless nature of the filter, we can replicate any filter
+        \item Deployability - replace any filter, as long as the contract on the data format remains the same
+        \item Testability - no side effects $\Rightarrow$ independent mocking / testing
+        \item Reuse - same filter can be applied in a different pipeline
+    \end{itemize}
+
+    Costs:
+    
+    \begin{itemize}
+        \item Latency grows with every stage - may also be a result of data transformation
+        \item Usability - no feedback until we check the sink
+        \item Cannot natively handle partial failures
+    \end{itemize}
+
+    Choose when work involves batch / stream transformation and throughput (volume) matters more than latency (speed)
+
+    \textbf{Modular monoliths}
+
+    layered architecture - separation by technical concern
+
+    Modular monolith - separation by domain (business) concern
+
+    By feature
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{modular_monolith.png}
+    \end{Figure}
+
+    Once the individual domains are separate processes, it becomes microservices
+
+    Buys:
+
+    \begin{itemize}
+        \item Deployability due to domain partitioning
+        \begin{itemize}
+            \item Build cross-functional teams that specialize in domains
+            \item Better aligned with the business problem
+        \end{itemize}
+        \item maintainability
+        \begin{itemize}
+            \item Easier to maintain domain-sepcific code
+        \end{itemize}
+        \item Testability
+        \begin{itemize}
+            \item Team understands the domain
+            \item Better testing of scenarios and edge cases
+        \end{itemize}
+        \item Performance
+        \begin{itemize}
+            \item One process; no distributed communication
+        \end{itemize}
+    \end{itemize}
+
+    Costs:
+
+    \begin{itemize}
+        \item Reusability
+        \begin{itemize}
+            \item Hard to reuse across modules due to domain-level dependencies
+        \end{itemize}
+        \item Scalability
+        \begin{itemize}
+            \item One deployment; no independent scaling
+        \end{itemize}
+        \item Fragile boundaries
+        \begin{itemize}
+            \item Functionalities may be developed to accidentially spawn between modules (e.g. add analytics which cuts across multiple domains)
+        \end{itemize}
+    \end{itemize}
+
+
 
 \end{multicols*}
 \end{document}
