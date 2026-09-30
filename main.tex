@@ -1171,7 +1171,7 @@
         \item Modular Monoliths
     \end{enumerate}
 
-    \textbf{Layered Architecture}
+    \uline{Layered Architecture}
 
     Software is organized as layers of components
     
@@ -1208,7 +1208,7 @@
 
     Doesn't impact usability
 
-    \textbf{Pipe and Filter}
+    \uline{Pipe and Filter}
 
     \begin{itemize}
         \item Linear
@@ -1262,7 +1262,7 @@
 
     Choose when work involves batch / stream transformation and throughput (volume) matters more than latency (speed)
 
-    \textbf{Modular monoliths}
+    \uline{Modular monoliths}
 
     layered architecture - separation by technical concern
 
@@ -1317,7 +1317,113 @@
         \end{itemize}
     \end{itemize}
 
+    \textbf{Model View Controller (MVC)}
 
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{mvc_sd.png}
+    \end{Figure}
+
+    Benefits:
+
+    \begin{itemize}
+        \item SoC - results in Modularity
+        \begin{itemize}
+            \item output / UI presentation separated from user input handling
+            \item Output and user input separated from application state and transaction processing
+            \begin{itemize}
+                \item Specifically, SoC between data storage, data handling, data visualization and user interaction
+            \end{itemize}
+        \end{itemize}
+        \item Facilitates extensibility
+        \begin{itemize}
+            \item A new view / controller pair can be added for a new interface medium, or
+            \item a new functionality can be added to the model independently of other components
+        \end{itemize}
+        \item Better testability (easy to mock the components)
+    \end{itemize}
+
+    \uline{Web MVC}
+    \begin{itemize}
+        \item Use MVC to strucutre web applications
+        \item Two communicating entities in web apps
+        \begin{itemize}
+            \item Server - holds the model
+            \item Client - interacts with the server (perform requests)
+        \end{itemize}
+        \item Controller: responsible for handling user HTTP request. select the model, prepare the view
+        \begin{itemize}
+            \item Additional responsibillities: map the requests to specific handlers
+            \item Handlers manage the request, select the model, and prepare the view
+            \item Usually split into
+            \begin{itemize}
+                \item Page controller - handles requests for a specific Page
+                \item Front controller - handles HTTP requests
+            \end{itemize}
+            \item Middleware can sometimes play the role of front controller
+        \end{itemize}
+        \item View: renders the HTTP response
+        \begin{itemize}
+            \item May use a template to render the contents of the model (obtained as HTTP response)
+            \item E.g. in ASP.net, views are defined in ASP files, which are HTML templates with server-side scripts that can generate dynamic content
+        \end{itemize}
+        \item Model: business logic + persistence
+        \begin{itemize}
+            \item Can use a database directly (e.g. MySQL) or via ORM
+            \item Needs to manage concurrent modifications
+        \end{itemize}
+    \end{itemize}
+
+    Buys:
+    \begin{itemize}
+        \item Usability - model doesn't control / call back the view; so we can have any number of views for the same model
+        \item SoC and modifiability - same reason allows replacing the view or model independently
+    \end{itemize}
+
+    Costs:
+    \begin{itemize}
+        \item Performance - multiple hops for a single view update
+        \item ``Fat controller'' - requests flow through the controller can lead to new logic being accumulated in the controller
+    \end{itemize}
+
+    \textbf{SPA}
+    
+    \begin{itemize}
+        \item A JavaScript program downloaded in the browser
+        \begin{itemize}
+            \item Continuously runs in the browser
+        \end{itemize}
+        \item Send query and retrieve data in the background without refreshing the webpage
+        \item Advantages: fluid experience, save bandwidth, reduce the preceived latency
+        \item Disadvantages: harder to develop, needs js, vulnerable to XSS attacks
+    \end{itemize}
+
+    Buys:
+    \begin{itemize}
+        \item Usability - no full page reloads, fluid interaction
+        \item Scalability - rendering cost on client side; server sends JSON only
+        \item Reduced perceived latency - after the initial page load, data load can be in the background
+    \end{itemize}
+
+    Costs:
+    \begin{itemize}
+        \item Security - vulnerable to XSS attacks
+        \begin{itemize}
+            \item Reduced client-side trust - tokens held can be ``attacked''
+            \item Every authorization rule must be re-enforced on server side
+        \end{itemize}
+        \item Initial performance - larger initial download
+    \end{itemize}
+
+    \textbf{Guidelines for architecture diagrams}
+
+    \begin{itemize}
+        \item Diagrams to be titled and labeled
+        \item Diagrams to have a legend explaining the notation (eg., meaning of arrows / lines)
+        \item Acronyms and abbreviations should be understandable or explained
+        \item Elements to be explicit and perhaps described in 1-2 lines
+        \item Lines to be labeled and consistent with directional and relationship intent (e.g. unidirectional, dependency, dataflow or control flow, technology protocol(s))
+    \end{itemize}
 
 \end{multicols*}
 \end{document}
