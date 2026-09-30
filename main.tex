@@ -1333,5 +1333,218 @@
         \item Lines to be labeled and consistent with directional and relationship intent (e.g. unidirectional, dependency, dataflow or control flow, technology protocol(s))
     \end{itemize}
 
+    \textbf{REST (REpresentational State Transfer)}
+
+    \begin{itemize}
+        \item Architectural style for distributed hypermedia systems
+        \item A set of constraints
+        \item Focus on improving:
+        \begin{itemize}
+            \item Performance and scalability
+            \item Simplicity of interaction
+            \item Modifiability
+            \item Reliability
+            \item Extensibility
+        \end{itemize}
+        \item Not an architecture by itself
+        \item Deefines constraints for transferring, accessing, and manipulating textual data representations (of hyypermedia) in a stateless manner across a network of systems
+        \begin{itemize}
+            \item Set of rules to be used for creating web services
+        \end{itemize}
+        \item Intention: Provide uniform interoperability, between different applications on the internet
+        \item HTTP to request access and use data
+        \begin{itemize}
+            \item Exploits HTTP's native capabilities, such as GET, PUT, POST, DELETE
+        \end{itemize}
+    \end{itemize}
+
+    \uline{6 REST arhitecture constraints:}
+
+    \begin{enumerate}
+        \item Client-server
+        \item \textbf{Stateless}
+        \item Layered system
+        \item Cacheable
+        \item \textbf{Uniform interface}
+        \item Code-on-demand (only optional constraint)
+    \end{enumerate}
+
+    \uline{Constraint: client-server}
+    
+    REST applications should have a client-server architecture for separation
+    of concerns (client not concerned with data storage of the resource, server
+    not concerned with user interface or user state)
+    \begin{itemize}
+        \item Portability of user interface
+        \item Scalability of server components
+        \item Evolve independently to support internet-scale requirements
+    \end{itemize}
+
+    \uline{Constraint: stateless}
+
+    Each interaction between a client and the server has to be entirely self-contained
+    (full information contained as part of the query params, headers, or URI)
+    \begin{itemize}
+        \item Server must not rely on information from previous requests
+        \item No session is maintained on the server side
+        \item Server is bound by the number of concurrent requests and not the
+        number of clients interacting
+        \item Reason: to improve
+        \begin{itemize}
+            \item scalability (server can quickly free resources
+            to serve additional requests)
+            \item reliability (can recover from partial failures)
+            \item Monitoring (only look at the single request data to analyze the request)
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Constraint: cacheable}
+
+    Response from server should include if the data is cacheable (and for how long) or not.
+    Client returns data from its cache in response to subsequent equivalent requests.
+
+    \begin{itemize}
+        \item Reason: to improve network efficiency
+        \begin{itemize}
+            \item Potentially eliminate some interactions
+            \item Improves efficiency, user-perceived performance
+        \end{itemize}
+        \item (-) Client can potentially receive stale data
+    \end{itemize}
+
+    \uline{Constraint: layered system}
+
+    Application must be organized as a (network) layered system.
+
+    \begin{itemize}
+        \item Each layer cannot see beyond the immediate neighbor
+        \item A client does not know and should not assume it has a direct connection to the server
+        \item Improved component complexity by restricting complexity to individual layers
+        \item Intermediary servers may improve system availability and performance
+        \begin{itemize}
+            \item E.g., by enabling load-balancing, caching
+        \end{itemize}
+        \item Provide data transformation \& filtering
+        \item (-) overall system complexity increases
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{layered_system.png}
+    \end{Figure}
+
+    \uline{Constraint: uniform interface}
+
+    There should be a uniform way of interacting with a given server irrespective
+    of device or type of application.
+
+    \begin{itemize}
+        \item Principle: Generality to the component interface
+        \begin{itemize}
+            \item Implementations are decoupled from the services they provide
+            \item System is free from unnatural restrictions and limitations
+        \end{itemize}
+        \item Should be efficient for large-grained hypermedia data transfer
+        \item Exploits HTTP/HTTPS requests and responses
+        \begin{itemize}
+            \item Requests: GET, PUT, POST, DELETE
+            \item Responses: HTTP status codes (e.g. 200 OK, 404 NOT FOUND)
+            \item Use the HTTP body to transfer the resource representation
+        \end{itemize}
+        \item Anything can be a resource (resource-based)
+        \begin{itemize}
+            \item Key abstraction of information in REST
+            \item E.g. document, image, user, etc.
+        \end{itemize}
+        \item Resource is a conceptual mapping to a set of identities
+        \item Resources are identified using stable, global, and unique resource identifiers
+        
+        \verb|/device-management/managed-devices/{id}|
+        \item Components perform operations on resource representations
+        \begin{itemize}
+            \item Representation consists of data, metadata describing the data
+            \item Client has representation of resource and contains enough information
+            to modify the resource on the server
+            \item \verb|HTTP DELETE|
+
+            \verb|/device-management/managed-devices/{id}|
+        \end{itemize}
+        \item Recollect: HTTP operations
+        \item Content negotiation
+        \begin{itemize}
+            \item If uniform representation, how does REST handle heterogeneous data like text,
+            images, video, PDFs?
+            \begin{itemize}
+                \item Use HTTP Content-Type header (MIME Types)
+            \end{itemize}
+        \end{itemize}
+        \item Self-describing
+        \begin{itemize}
+            \item For interactions with resources through the uniform interface, REST needs self-describing messages
+            \begin{itemize}
+                \item Each message includes enough information to describe how to process the message
+                so that server can easily analyze the request.
+            \end{itemize}
+            \item Components can get a complete understanding of resources or relevant states
+            by just inspecting representations
+            \item Hypermedia driving application state
+            \begin{itemize}
+                \item Representations that are exchanged should be linked
+                \begin{itemize}
+                    \item Clients that need the resource can discover them and obtain them from the links
+                    \item These links enable exposing new resources and application state transitions
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \begin{verbatim}
+    {
+        "id": 123,
+        "status": "PAID",
+        "links": {
+            "self": "/orders/123",
+            "cancel": "/orders/123/cancellation",
+            "refund": "/orders/123/refunds"
+        }
+    }
+    \end{verbatim}
+
+    Client does not need to know in advance that a paid order can be cancelled or refunded, or guess the URL structure.
+    The server provides this information directly. 
+
+    \uline{Constraint: code-on-demand}
+
+    (Optionally) allow client functionality to be extended by downloading executable code 
+    (e.g. applets, js code)
+
+    \textbf{Advantages and disadvantages of REST}
+
+    \begin{itemize}
+        \item Advantages
+        \begin{itemize}
+            \item Systems that are less tightly coupled (uniform interface with
+            self-contained messages $\Rightarrow$ depend only on the interface, not on internal implementation details)
+            \begin{itemize}
+                \item Allows for swapping, upgrading, or replacing components without affecting the system
+            \end{itemize}
+            \item Provides scalability, usability, accessibility, and
+            
+            mashup-ability
+            \item New media types can be added without breaking the clients (through content negotiation)
+        \end{itemize}
+        \item Disadvantages
+        \begin{itemize}
+            \item Weak contract enforcement - no built-in typing; runtime errors (e.g.
+            if client requests a pdf, no guarantee that what it receives is actually a pdf.
+            Solely the client's responsibillity to check and handle that)
+            \item Being stateless may decrease network performance by increasing the repetitive data sent in series of queries
+            \item Using URI may degrade efficiency, since information is transferred in a standardized form rather than one which is specific to an application's needs.
+        \end{itemize}
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{REST_alternatives.png}
+    \end{Figure}
 \end{multicols*}
 \end{document}
