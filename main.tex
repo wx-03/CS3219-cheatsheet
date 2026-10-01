@@ -1546,5 +1546,140 @@
        \centering
        \includegraphics[width=\linewidth]{REST_alternatives.png}
     \end{Figure}
+
+    \textbf{\uline{Lecture 7 - Microservice Architecture}}
+
+    \textbf{Monolithic applications}
+
+    When the system becomes too large for a single applicationn, will have these problems:
+    \begin{itemize}
+        \item Large codebase
+        \item Slow deployment
+        \item Multiple teams involved
+        \item Scaling issues (no independent scaling)
+    \end{itemize}
+
+    \textbf{Microservices architectural style}
+    \begin{itemize}
+        \item Microservice application - a single application as a suite of small services / applications
+        \item Each microservice offers a well-defined business capability
+        \item Each microservice is defined to be developed and deployed independently
+        \item Microservices communicate with each other through well-defined mechanisms / published interfaces
+    \end{itemize}
+
+    Microservices is an architectural style that structures an application as a
+    collection of services that are
+
+    \begin{itemize}
+        \item Organized around business capabilities
+        \item Loosely coupled
+        \item Owned by a small team
+        \item Independently deployable
+    \end{itemize}
+
+    A microservice offers a well-defined business capability (establish an exact boundary)
+
+    Cohesive:
+
+    \begin{itemize}
+        \item Features in the microservice should be highly related
+        \item Each microservice has a responsibility allocated
+    \end{itemize}
+
+    Developed and deployed independently (bc the microservices are losoely coupled)
+
+    \uline{Developed independently:}
+
+    \begin{itemize}
+        \item Services do not need to share any of their code or implementation with other services
+        \item Service decisions are independently made and handled by small teams 
+        \begin{itemize}
+            \item Services are owned by small teams
+            \item Cross-functional small teams organized around capabilities
+            \item E.g. Amazon's two-pizza teams (no team should be big enough that it would take more than two pizzas to feed them.)
+            \begin{itemize}
+                \item Small teams owning the whole lifecycle of their services
+                \item Cross-functional team
+            \end{itemize}
+            \item No / minimal dependence on each other
+            \begin{itemize}
+                \item Loose coupling
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Deployed independently:}
+
+    \begin{itemize}
+        \item Each microservice has its own specific deployment, resource, scaling,
+        and monitoring requirements. Each service instance must be provided with
+        the appropriate CPU, memory, and I/O resources.
+        \begin{itemize}
+            \item For each service, a certain number of instances need to run, based on the demand for that service.
+        \end{itemize}
+        \item Similar to the traditional approach of monolith deployment
+        \begin{itemize}
+            \item Run multiple instances of different services on a host (Physical or Virtual machine).
+            \item Deploy each service instance as a JVM process; e.g., Tomcat or Jetty instances per service instance.
+            \item Deploy multiple service instances in the same JVM; e.g., as web applications or OSGI bundles
+        \end{itemize}
+        \item Pattern - service instance per host / container / VM
+    \end{itemize}
+
+    \uline{Well-defined communiation mechanisms:}
+
+    \begin{itemize}
+        \item Micoservices communicate through well-defined mechanisms
+        \item Can be synchronous or asynchronous
+    \end{itemize}
+
+    Synchronous communication patterns: RESTful API over HTTPs, gRPC services, GraphQL interfaces
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{synchronous_communication.png}
+    \end{Figure}
+
+    Asynchronous communication patterns: Event based; e.g., publish-subscribe events
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{asynchronous_communication.png}
+    \end{Figure}
+
+    \uline{Buys}
+
+    \begin{itemize}
+        \item Deployability - separate deployables, separate pipelines
+        \begin{itemize}
+            \item E.g. ship credit seervice without updating supplier services
+        \end{itemize}
+        \item Scalability - service as a unit of scaling
+        \begin{itemize}
+            \item E.g. scale order service during peak periods
+        \end{itemize}
+        \item Availability - fault isolation, introduce redundancy
+        \begin{itemize}
+            \item E.g. a down supplier service doesn't impact credit settlement
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Costs}
+
+    \begin{itemize}
+        \item Performance - latency and timeout can occur in communication
+        \begin{itemize}
+            \item E.g., every call is a network hop, down service keeps others waiting
+        \end{itemize}
+        \item Integrity - each service owns it data
+        \begin{itemize}
+            \item E.g. potential data duplication causes inconsistencies
+        \end{itemize}
+        \item Complexity increases - distributed debugging, need for observability
+        \begin{itemize}
+            \item E.g. $n$ services $\Rightarrow n$ logs $\Rightarrow$ harder traceability
+        \end{itemize}
+    \end{itemize}
+
 \end{multicols*}
 \end{document}
