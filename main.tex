@@ -1681,5 +1681,329 @@
         \end{itemize}
     \end{itemize}
 
+    \textbf{\uline{Domain-driven design (DDD)}}
+
+    \uline{Domain model}
+
+    Domain:
+
+    \begin{itemize}
+        \item The problem space; identifies the main business problem that you intend to solve
+        \item The critical and fundamental or founational concept behind the business
+        \item Refers to a specific area of functionality or business capability
+        \item Requirements come from the domain
+    \end{itemize}
+
+    Domain model:
+
+    \begin{itemize}
+        \item Represents a view of the problem domain
+        \item An abstraction; not the reality
+        \item Contains only necessary information to solve the problem in the context of the application
+    \end{itemize}
+
+    E.g. use case: I need to navigate London's underground network
+    
+    Domain: The London tube network
+
+    Domain model: The London tube map
+
+    \begin{itemize}
+        \item The model ignores how deep, what are crossover points, speed of the train, etc.
+        \item Retains stations and interchanges
+    \end{itemize}
+
+    \textbf{E.g. Domain: online retailer}
+    \begin{Figure}
+       \centering
+       \includegraphics[width=0.9\linewidth]{subdomains.png}
+    \end{Figure}    
+
+    Avoid seeking a single unified domain model representing the entire system. 
+
+    A complex system is a collection of multiple domain models (sub-domains).
+    A sub-domain is a logical separation of domain (cohesive units of business functionalities)
+
+    \uline{Sub-domains}
+    \begin{itemize}
+        \item Core: key differentiator for the business and most valuable part of the application
+        \begin{itemize}
+            \item Usually developed in-house
+            \item E.g. Product, order, shipping
+        \end{itemize}
+        \item Supporting: related to whwat the business does but not a differentiator.
+        \begin{itemize}
+            \item Can be implemented in-house or outsourced
+            \item E.g. Inventory, invoicing
+        \end{itemize}
+        \item Generic: not specific to the business
+        \begin{itemize}
+            \item Implemented using off-the-shelf software
+            \item E.g. Auth, Forecasting
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Domain-driven design}
+    \begin{itemize}
+        \item Domain-centric approach to software design
+        \begin{itemize}
+            \item For complex problem domains
+            \item To manage complexity
+        \end{itemize}
+        \item A collection of patterns, principles, practices, and 2 ideas run through all of them:
+        \begin{enumerate}
+            \item Domain model should be kept isolated from technical complexities (e.g. databases, frameworks, user interfaces)
+            \item Create software that closely reflects business needs
+        \end{enumerate}
+    \end{itemize}
+
+    \textbf{Bounded context}
+
+    An explicit boundary within which a domain model exists.
+
+    \begin{itemize}
+        \item Allow implementation and runtime execution of sub-domain(s)
+        \begin{itemize}
+            \item E.g. in FoC, sub-domain is user management -- identity and access
+        \end{itemize}
+        \item Sub-domain is closely aligned with bounded context
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{bounded_context.png}
+    \end{Figure}
+
+    Ubiquitous language: a shared language between domain experts and developers, built from business terms.
+
+    \begin{itemize}
+        \item The same terms appear in conversations, requirements, design, and code
+        \item Scoped to a bounded context. One meaning per term inside a context; same
+        word can mean something else in another context
+        \begin{itemize}
+            \item E.g. customer in sales context vs customer in support context
+        \end{itemize}
+        \item When a term starts to mean different things to different people, it indicates an edge in bounded context
+    \end{itemize}
+
+    \uline{Collaboration}
+
+    \begin{itemize}
+        \item Capture collaboration between different bounded contexts
+        \item Identify and describe collaborations
+    \end{itemize}
+
+    \begin{enumerate}
+        \item Shared kernel (vs shared database (antipattern))
+        \begin{itemize}
+            \item Two contexts are developed independently, but jointly own a small subset shared part of the model
+        \end{itemize}
+
+        \item Upstream-downstream
+        \begin{itemize}
+            \item Two contexts are in a provider-consumer relationship
+            \begin{itemize}
+                \item Supplier-constomer relationship: upstream designs API with downstream's needs in mind
+                \item Conformist relationship: Downstream adopts the upstream's published model as-is
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+
+    \begin{itemize}
+        \item Stamp coupling: One component passes an entire data structure to
+        another component that needs only part of it
+        \item Data coupling: Components share only the data elements that the receiver needs
+        (weaker form of coupling than stamp coupling)
+    \end{itemize}
+
+    \textbf{Summary}
+
+    \uline{Domain}
+
+    \begin{itemize}
+        \item The problem space that a business occupies and provides solution to
+        \item This includes rules, processes, ideas, business-specific terminology,
+        and anything related to its problem space
+        \item The domain exists regardless of the existence of the business
+    \end{itemize}
+
+    \uline{Sub-domain}
+
+    \begin{itemize}
+        \item A component of the main domain. It belongs to the problem space
+        \item It focuses on a specific set of responsibilities and typically reflects
+        some of the business organisation’s structure. E.g., Warehouse, Sales, Engineering, etc.
+    \end{itemize}
+
+    \uline{Bounded context}
+
+    \begin{itemize}
+        \item Highly cohesive boundary including input, output, events, requirements,
+        processes, and data models relevant to the subdomain
+        \item Ideally a bounded context and a subdomain will be in complete alignment
+        but bounded contexts belong to the solution space
+    \end{itemize}
+
+    \textbf{Aggregates - consistency unit in DDD}
+
+    \begin{itemize}
+        \item A cluster of related objects that we treat as a single unit for the purpose of data changes
+        \begin{itemize}
+            \item Hierarchy of entities
+            \item Has ``Root'' and ``Boundaries''
+        \end{itemize}
+        \item Aggregate root: Parent entitiy of the cluster; public interface to the aggregate
+        \item Aggregate boundaries:
+        \begin{itemize}
+            \item Consistency boundary -- think from a visibility \& operation peerspective
+            \begin{itemize}
+                \item All processes or objects external to the aggregate are only allowed to read
+                the aggregate's state
+                \item State can only be modified by executing corresponding methods of the aggregate's 
+                public interface
+            \end{itemize}
+            \item Transactional boundary -- think about it from a transaction perspective
+            \begin{itemize}
+                \item Any change to the aggregate will either all succeed or none succeed
+            \end{itemize}
+        \end{itemize}
+        \item A bounded context can contain several aggregates
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=0.85\linewidth]{aggregates.png}
+    \end{Figure}
+
+    \textbf{Identifying microservices}
+
+    \begin{itemize}
+        \item Use sub-domains
+        \begin{itemize}
+            \item Each subdomain corresponds to a different part of the business
+            \item Define services corresponding to subdomains.
+            \item Example: The subdomains of an online store include:
+            \begin{itemize}
+                \item Product catalog, Inventory mgmt, Order mgmt, Delivery mgmt…
+            \end{itemize}
+        \end{itemize}
+        \item Use bounded contexts
+        \begin{itemize}
+            \item Microservices are bounded contexts
+            \begin{itemize}
+                \item Caution: but all bounded contexts are not necessarily microservices
+                \item Also, bounded contexts at times have wide functionalities/wider
+                boundaries.
+            \end{itemize}
+        \end{itemize}
+        \item Use aggregates
+        \begin{itemize}
+            \item A well-designed aggregate exhibits many of the characteristics
+            of a well-designed microservice:
+            \begin{itemize}
+                \item An aggregate is derived from business requirements
+                \item An aggregate typically has a high functional cohesion
+                \item Aggregates are typically loosely coupled
+            \end{itemize}
+            \item Combine related aggregates into a single service
+        \end{itemize}
+    \end{itemize}
+
+    \uline{Further guidelines}
+
+    \begin{itemize}
+        \item Apply SRP: Each service should have only a small set of responsibilities
+        \item Decompose by verb or use case and define services are responsible for particular actions
+        \begin{itemize}
+            \item E.g., Shipping service is responsible for shipping complete orders!
+        \end{itemize}
+        \item Decompose by nouns or resources or by defining a service that is responsible
+        for all operations on entities/resources of a given type
+        \begin{itemize}
+            \item E.g., Account service is responsible for managing user accounts.
+        \end{itemize}
+        \item Also consider other factors
+        \begin{itemize}
+            \item Team size, Technologies
+            \item Scalability/Availability/Security requirements
+        \end{itemize}
+        \item Possible to further decompose a microservice into two or more smaller services
+        \item Possible to combine two or more microservices into one (opposite of above!)
+    \end{itemize}
+
+    \textbf{\uline{Event Storming}}
+
+    \begin{itemize}
+        \item Lightweight process
+        \begin{itemize}
+            \item Commonly used in the industry
+        \end{itemize}
+        \item Domain events are simply some sort of event that occurs in the domain
+        \& that are relevant.
+        \item Events record state changes
+        \item Things that happen in your business that u need to track or respond to
+    \end{itemize}
+
+    \uline{Commands}
+
+    \begin{itemize}
+        \item Command causes events
+        \item Commands are issued by a user or an external system
+    \end{itemize}
+
+    \uline{Policy}
+
+    When event then Command (e.g. when payment card is submitted, then confirm order)
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{policy.png}
+    \end{Figure}
+
+    \uline{Finding boundaries}
+
+    \begin{itemize}
+        \item Draw boundaries that delimit each consistent context.
+        \begin{itemize}
+            \item the relations and communication between contexts are determined
+            \item These boundaries give you microservices boundaries
+        \end{itemize}
+        \item A bounded context solves one problem and it can contain more than one aggregate.
+        \item You can create two different aggregates solving one problem delimited by one bounded context
+    \end{itemize}
+
+    \begin{Figure}
+       \centering
+       \includegraphics[width=\linewidth]{finding_boundaries.png}
+    \end{Figure}
+
+    \uline{Summary}
+    
+    \begin{itemize}
+        \item Requirement analysis helps in the discovery of domain events.
+        \begin{itemize}
+            \item Command/event must come from a business need.
+        \end{itemize}
+        \item Start with business events, not CRUD
+        \begin{itemize}
+            \item Focus on domain events from real business needs, not technical data
+            operations
+        \end{itemize}
+        \item Not always true: One aggregate = one microservice;
+
+         Not always true: One bounded context = one microservice
+        \begin{itemize}
+            \item Do not assume that microservice boundaries are synonymous with the aggregates
+            or bounded context from DDD or Event Storming
+            \item Aggregates and bounded contexts inform service boundaries, but don't
+            map 1:1 to microservices always
+            \item A bounded context may contain multiple aggregates
+            \item Group by business capability and cohesion
+        \end{itemize}
+        \item Microservices boundaries evolve over time
+    \end{itemize}
+
+    \textbf{\uline{Lecture 8 - Microservice architecture}}
+
 \end{multicols*}
 \end{document}
